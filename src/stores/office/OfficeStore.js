@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getAll, get } from "@/helpers/Request";
+import { getAll, get, post } from "@/helpers/Request";
 const baseUrl = "/offices";
 export const useOfficeStore = defineStore("office", {
     state: () => {
@@ -16,7 +16,7 @@ export const useOfficeStore = defineStore("office", {
             const { data } = response;
             this.list = data;
             this.isLoading = false;
-            return response.message;
+            return response;
         },
         async find(id) {
             this.isLoading = true;
@@ -24,7 +24,14 @@ export const useOfficeStore = defineStore("office", {
             const { data } = response;
             this.finded = data;
             this.isLoading = false;
-            return response.message;
+            return response;
+        },
+        async add(object) {
+            this.isLoading = true;
+            const response = await post(baseUrl, object);
+            await this.all();
+            this.isLoading = false;
+            return response;
         },
     },
 });

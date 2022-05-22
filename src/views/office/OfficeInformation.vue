@@ -4,8 +4,10 @@
 
 <script>
 import { defineAsyncComponent } from "@vue/runtime-core";
-import { mapStores } from 'pinia';
-import { useOfficeStore } from '@/stores/office/OfficeStore';
+import { mapStores } from "pinia";
+import { useOfficeStore } from "@/stores/office/OfficeStore";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 export default {
     components: {
         OfficeForm: defineAsyncComponent(() =>
