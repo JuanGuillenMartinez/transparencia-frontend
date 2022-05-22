@@ -35,7 +35,11 @@ export default {
     },
     methods: {
         goToInformation(selected) {
-            console.log(selected);
+            const id = selected.id;
+            this.$router.push({
+                name: "OfficeInformationRoute",
+                params: { id },
+            });
         },
     },
     async created() {

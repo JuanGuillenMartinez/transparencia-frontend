@@ -1,10 +1,12 @@
 <template>
-    <h1>aqui va la info</h1>
+    <h1>aqui va la info de {{ id }}</h1>
 </template>
 
 <script>
 export default {
-
+    props: {
+        id: Number,
+    }
 }
 </script>
 
