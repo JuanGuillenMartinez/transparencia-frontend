@@ -1,9 +1,11 @@
 <template>
     <table-lite
+        :is-static-mode="true"
         :columns="columns"
         :rows="rows"
         :total="totalCount"
         :sortable="sortable"
+        :page-options="quantity"
         @row-clicked="show"
     ></table-lite>
 </template>
@@ -16,6 +18,10 @@ export default {
             type: Array,
             default: [],
         },
+        quantityShow: {
+            type: Number,
+            default: 10,
+        },
     },
     computed: {
         sortable() {
@@ -26,6 +32,14 @@ export default {
         },
         totalCount() {
             return this.rows.length;
+        },
+        quantity() {
+            return [
+                {
+                    value: this.quantityShow,
+                    text: this.quantityShow,
+                },
+            ];
         },
     },
     methods: {
