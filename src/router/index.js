@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import OfficeView from "@/views/office/OfficeIndex.vue";
-
+// import OfficeView from "@/views/office/OfficeIndex.vue";
+// import HomeRouter from "@/router/home/index";
+import OfficeRouter from "@/router/office/index";
 const routes = [
+    // {
+    //     path: "/",
+    //     name: "home",
+    //     component: HomeView,
+    // },
     {
-        path: "/",
-        name: "home",
-        component: OfficeView,
+        path: "/offices",
+        ...OfficeRouter,
     },
 ];
 

@@ -1,6 +1,5 @@
 <template>
     <table-lite
-        :is-static-mode="true"
         :columns="columns"
         :rows="rows"
         :total="totalCount"
@@ -31,7 +30,7 @@ export default {
     },
     methods: {
         show(selected) {
-            console.log(selected);
+            this.$emit("row-selected", selected);
         },
     },
 };
