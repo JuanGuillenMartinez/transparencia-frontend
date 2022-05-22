@@ -1,11 +1,11 @@
 <template>
-    <OfficeTable />
+    <OfficeTable v-if="!isLoading" :rows="offices" />
 </template>
 
 <script>
 import { defineAsyncComponent } from "@vue/runtime-core";
-import { mapStores } from 'pinia';
-import { useOfficeStore } from '@/stores/office/OfficeStore';
+import { mapStores } from "pinia";
+import { useOfficeStore } from "@/stores/office/OfficeStore";
 export default {
     components: {
         OfficeTable: defineAsyncComponent(() =>
@@ -14,10 +14,16 @@ export default {
     },
     computed: {
         ...mapStores(useOfficeStore),
+        offices() {
+            return this.officeStore.list;
+        },
+        isLoading() {
+            return this.officeStore.isLoading;
+        },
     },
-    created() {
-        this.officeStore.all();
-    }
+    async created() {
+        await this.officeStore.all();
+    },
 };
 </script>
 
