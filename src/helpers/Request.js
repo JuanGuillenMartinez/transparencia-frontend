@@ -13,7 +13,9 @@ export const post = async (url, data) => {
 };
 
 export const get = async (url) => {
-    return await axios.getInstance().get(url);
+    const response = await axios.getInstance().get(url);
+    const { data } = response;
+    return data;
 };
 
 export const deleteRequest = async (url, data) => {
