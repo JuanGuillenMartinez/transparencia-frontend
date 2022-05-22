@@ -7,7 +7,7 @@ export default {
     children: [
         {
             name: "OfficeListRoute",
-            path: "list",
+            path: "todos",
             props: true,
             component: () =>
                 import(

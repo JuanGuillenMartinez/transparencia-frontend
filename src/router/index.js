@@ -9,7 +9,7 @@ const routes = [
     //     component: HomeView,
     // },
     {
-        path: "/offices",
+        path: "/dependencias",
         ...OfficeRouter,
     },
 ];
