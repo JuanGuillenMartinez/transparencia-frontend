@@ -9,6 +9,7 @@
                 :quantity-show="5"
             />
             <custom-table
+                @row-selected="goToDocuments"
                 :columns="subdepartmentHeaders"
                 :rows="subdepartments"
                 :quantity-show="5"
@@ -60,6 +61,9 @@ export default {
     methods: {
         selectDepartment(department) {
             this.subdepartments = department.subdepartments;
+        },
+        goToDocuments() {
+            // this.$router.push({ name:  })
         }
     },
     async mounted() {
