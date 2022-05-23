@@ -62,8 +62,10 @@ export default {
         selectDepartment(department) {
             this.subdepartments = department.subdepartments;
         },
-        goToDocuments() {
-            // this.$router.push({ name:  })
+        goToDocuments(subdepartment) {
+            const id = subdepartment.id;
+            console.log(subdepartment);
+            this.$router.push({ name: 'SubseccionListRoute', params: { id } })
         }
     },
     async mounted() {

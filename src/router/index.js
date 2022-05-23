@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import OfficeView from "@/views/office/OfficeIndex.vue";
-// import HomeRouter from "@/router/home/index";
 import OfficeRouter from "@/router/office/index";
-// import SubseccionRouter from "@/router/subseccion/index";
+import SubseccionRouter from "@/router/subseccion/index";
+
 const routes = [
     // {
     //     path: "/",
@@ -13,10 +12,10 @@ const routes = [
         path: "/dependencias",
         ...OfficeRouter,
     },
-    // {
-    //     path: "/subsecciones",
-    //     ...SubseccionRouter,
-    // },
+    {
+        path: "/subsecciones",
+        ...SubseccionRouter,
+    },
 ];
 
 const router = createRouter({
