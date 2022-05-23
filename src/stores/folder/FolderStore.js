@@ -10,6 +10,7 @@ export const useFolderStore = defineStore("folder", {
             isLoading: true,
             finded: {},
             tableHeaders: headers,
+            selected: {},
         };
     },
     actions: {

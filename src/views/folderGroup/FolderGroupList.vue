@@ -1,14 +1,25 @@
 <template>
     <div class="list-container">
         <div class="folder-group">
-            <custom-table @row-selected="searchDocuments" :columns="tableHeaders" :rows="folderGroupList" />
+            <custom-table
+                @row-selected="searchDocuments"
+                :columns="tableHeaders"
+                :rows="folderGroupList"
+            />
         </div>
         <div class="folder-group-information">
             <div class="document-list">
-                <custom-table :columns="folderHeaders" :rows="folderList" />
+                <custom-table
+                    @row-selected="selectDocument"
+                    :columns="folderHeaders"
+                    :rows="folderList"
+                />
             </div>
             <div class="document-information">
-                aqui va la tabla de informacion del documento
+                <document-information
+                    v-if="documentIsSelected"
+                    :properties="documentInformation"
+                />
             </div>
         </div>
     </div>
@@ -25,6 +36,14 @@ export default {
         CustomTable: defineAsyncComponent(() =>
             import("@/components/Table.vue")
         ),
+        DocumentInformation: defineAsyncComponent(() =>
+            import("@/components/folder/DocumentInformation.vue")
+        ),
+    },
+    data() {
+        return {
+            documentIsSelected: false,
+        };
     },
     props: {
         id: Number,
@@ -47,11 +66,18 @@ export default {
         folderList() {
             return this.folderStore.listFinded;
         },
+        documentInformation() {
+            return this.folderStore.selected.folder_information;
+        },
     },
     methods: {
         async searchDocuments(row) {
             await this.folderStore.searchByFolder(row.id);
-        }
+        },
+        selectDocument(selected) {
+            this.documentIsSelected = true;
+            this.folderStore.selected = selected;
+        },
     },
     async mounted() {
         await this.subdepartmentStore.folderGroups(this.id);
