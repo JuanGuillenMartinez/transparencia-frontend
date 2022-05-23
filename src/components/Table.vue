@@ -50,4 +50,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+* {
+    text-align: center;
+}
+</style>
