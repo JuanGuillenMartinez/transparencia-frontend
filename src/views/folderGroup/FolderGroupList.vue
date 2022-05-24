@@ -6,6 +6,9 @@
                 :columns="tableHeaders"
                 :rows="folderGroupList"
             />
+            <CButton color="success" @click="showGroupForm = true"
+                >Agregar</CButton
+            >
         </div>
         <div class="folder-group-information">
             <div class="document-list">
@@ -15,9 +18,33 @@
                     :rows="folderList"
                 />
             </div>
+            <CButton color="success" @click="showDocumentForm = true"
+                >Agregar</CButton
+            >
         </div>
     </div>
-    <custom-modal title="Información del documento" title-close="Cerrar" @close-form="showModal = false" :visible="showModal">
+    <custom-modal
+        title="Registrar Serie de Documentos"
+        title-close="Cerrar"
+        @close-form="showGroupForm = false"
+        :visible="showGroupForm"
+    >
+        <folder-group-form @save-clicked="saveFormGroup" />
+    </custom-modal>
+    <custom-modal
+        title="Registrar Documentos"
+        title-close="Cerrar"
+        @close-form="showDocumentForm = false"
+        :visible="showDocumentForm"
+    >
+        <folder-form :readonly="false" @save-clicked="saveDocument" />
+    </custom-modal>
+    <custom-modal
+        title="Información del documento"
+        title-close="Cerrar"
+        @close-form="showModal = false"
+        :visible="showModal"
+    >
         <document-information :properties="information" />
     </custom-modal>
 </template>
@@ -28,6 +55,7 @@ import { mapStores } from "pinia";
 import { useSubdepartmentStore } from "@/stores/subdepartment/SubdepartmentStore";
 import { useFolderGroupStore } from "@/stores/folderGroup/FolderGroupStore";
 import { useFolderStore } from "@/stores/folder/FolderStore";
+import { CButton } from "@coreui/vue";
 export default {
     components: {
         CustomTable: defineAsyncComponent(() =>
@@ -39,12 +67,21 @@ export default {
         CustomModal: defineAsyncComponent(() =>
             import("@/components/CustomModal.vue")
         ),
+        FolderGroupForm: defineAsyncComponent(() =>
+            import("@/components/folderGroup/FolderGroupForm.vue")
+        ),
+        FolderForm: defineAsyncComponent(() =>
+            import("@/components/folder/FolderForm.vue")
+        ),
+        CButton,
     },
     data() {
         return {
             documentIsSelected: false,
             showModal: false,
             information: {},
+            showGroupForm: false,
+            showDocumentForm: false,
         };
     },
     props: {
@@ -77,6 +114,12 @@ export default {
             this.information = selected.folder_information;
             this.showModal = true;
         },
+        async saveFormGroup(object) {
+            console.log(object);
+        },
+        async saveDocument(object) {
+            console.log(object);
+        },
     },
     async mounted() {
         await this.subdepartmentStore.folderGroups(this.id);
@@ -89,8 +132,8 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-.folder-group-information {
+/* .folder-group-information {
     display: grid;
     grid-template-rows: 1fr 1fr;
-}
+} */
 </style>
