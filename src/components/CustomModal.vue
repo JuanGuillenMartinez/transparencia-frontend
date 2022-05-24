@@ -1,28 +1,16 @@
 <template>
-    <CModal
-        :visible="visible"
-        @close="
-            () => {
-                visible = false;
-            }
-        "
-    >
+    <CModal :visible="visible" @close="$emit('closeForm')">
         <CModalHeader>
-            <CModalTitle>Modal title</CModalTitle>
+            <CModalTitle>{{ title }}</CModalTitle>
         </CModalHeader>
-        <CModalBody>Woohoo, you're reading this text in a modal!</CModalBody>
+        <CModalBody>
+            <slot />
+        </CModalBody>
         <CModalFooter>
-            <CButton
-                color="secondary"
-                @click="
-                    () => {
-                        visible = false;
-                    }
-                "
-            >
-                Close
+            <CButton color="danger" @click="$emit('closeForm')">
+                {{titleClose}}
             </CButton>
-            <CButton color="primary">Save changes</CButton>
+            <CButton color="primary">Guardar</CButton>
         </CModalFooter>
     </CModal>
 </template>
@@ -34,8 +22,12 @@ import { CModalTitle } from "@coreui/vue";
 import { CModalFooter } from "@coreui/vue";
 import { CButton } from "@coreui/vue";
 import { CModalBody } from "@coreui/vue";
+import { defineAsyncComponent } from "@vue/runtime-core";
 export default {
     components: {
+        DocumentInformation: defineAsyncComponent(() =>
+            import("@/components/folder/DocumentInformation.vue")
+        ),
         CModal,
         CModalHeader,
         CModalTitle,
@@ -45,7 +37,10 @@ export default {
     },
     props: {
         visible: false,
+        title: String,
+        titleClose: String,
     },
+    emits: ["closeForm"],
 };
 </script>
 

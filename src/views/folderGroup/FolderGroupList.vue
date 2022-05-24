@@ -10,29 +10,16 @@
         <div class="folder-group-information">
             <div class="document-list">
                 <custom-table
-                    @row-selected="selectDocument"
+                    @row-selected="showModalInformation"
                     :columns="folderHeaders"
                     :rows="folderList"
                 />
             </div>
-            <div class="document-information">
-                <document-information
-                    v-if="documentIsSelected"
-                    :properties="documentInformation"
-                />
-            </div>
         </div>
     </div>
-    <CButton
-        color="primary"
-        @click="
-            () => {
-                visibleLiveDemo = true;
-            }
-        "
-        >Launch demo modal</CButton
-    >
-    <custom-modal :visible="visibleLiveDemo" />
+    <custom-modal title="Información del documento" title-close="Cerrar" @close-form="showModal = false" :visible="showModal">
+        <document-information :properties="information" />
+    </custom-modal>
 </template>
 
 <script>
@@ -56,7 +43,8 @@ export default {
     data() {
         return {
             documentIsSelected: false,
-            visibleLiveDemo: false,
+            showModal: false,
+            information: {},
         };
     },
     props: {
@@ -80,17 +68,14 @@ export default {
         folderList() {
             return this.folderStore.listFinded;
         },
-        documentInformation() {
-            return this.folderStore.selected.folder_information;
-        },
     },
     methods: {
         async searchDocuments(row) {
             await this.folderStore.searchByFolder(row.id);
         },
-        selectDocument(selected) {
-            this.documentIsSelected = true;
-            this.folderStore.selected = selected;
+        showModalInformation(selected) {
+            this.information = selected.folder_information;
+            this.showModal = true;
         },
     },
     async mounted() {
