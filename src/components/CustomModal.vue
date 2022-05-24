@@ -10,7 +10,6 @@
             <CButton color="danger" @click="$emit('closeForm')">
                 {{titleClose}}
             </CButton>
-            <CButton color="primary">Guardar</CButton>
         </CModalFooter>
     </CModal>
 </template>
