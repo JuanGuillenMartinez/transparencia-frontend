@@ -13,7 +13,7 @@
                     >Agregar</CButton
                 >
             </div>
-            <div class="container-subdepartment-table">
+            <div v-if="visibleSubdepartmentsTable" class="container-subdepartment-table">
                 <custom-table
                     @row-selected="goToDocuments"
                     :columns="subdepartmentHeaders"
@@ -89,6 +89,7 @@ export default {
             visibleDepartmentForm: false,
             visibleSubdepartmentForm: false,
             departmentSelected: {},
+            visibleSubdepartmentsTable: false,
         };
     },
     computed: {
@@ -111,6 +112,7 @@ export default {
     },
     methods: {
         selectDepartment(department) {
+            this.visibleSubdepartmentsTable = true;
             this.departmentId = department.id;
             this.officeStore.departmentSelectedId = department.id;
             this.officeStore.subdepartmentsSelected = department.subdepartments;
