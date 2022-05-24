@@ -115,7 +115,9 @@ export default {
             this.showModal = true;
         },
         async saveFormGroup(object) {
-            console.log(object);
+            this.showGroupForm = false;
+            object.subdepartment_id = this.id;
+            const response = await this.folderGroupStore.add(object);
         },
         async saveDocument(object) {
             console.log(object);

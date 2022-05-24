@@ -31,7 +31,8 @@ export const useFolderGroupStore = defineStore("folderGroup", {
         async add(object) {
             this.isLoading = true;
             const response = await post(baseUrl, object);
-            await this.all();
+            const responseGroups = await get(`/subdepartments/${object.subdepartment_id}/groups`);
+            this.list = responseGroups.data;
             this.isLoading = false;
             return response;
         },
