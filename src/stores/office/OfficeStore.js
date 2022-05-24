@@ -7,6 +7,8 @@ export const useOfficeStore = defineStore("office", {
             list: [],
             isLoading: true,
             finded: {},
+            subdepartmentsSelected: [],
+            departmentSelectedId: 0,
         };
     },
     actions: {
@@ -32,6 +34,32 @@ export const useOfficeStore = defineStore("office", {
             await this.all();
             this.isLoading = false;
             return response;
+        },
+        async addDepartment(officeId, object) {
+            object.office_id = officeId;
+            this.isLoading = true;
+            const response = await post(`/departments`, object);
+            await this.find(this.finded.id);
+            this.isLoading = false;
+            return response;
+        },
+        async addSubdepartment(officeId, object) {
+            object.department_id = officeId;
+            this.isLoading = true;
+            const response = await post(`/subdepartments`, object);
+            await this.find(this.finded.id);
+            const department = this.findDepartmentById(
+                this.departmentSelectedId
+            );
+            this.subdepartmentsSelected = department.subdepartments;
+            this.isLoading = false;
+            return response;
+        },
+        findDepartmentById(id) {
+            const found = this.finded.departments.find(
+                (element) => element.id === id
+            );
+            return found;
         },
     },
 });
