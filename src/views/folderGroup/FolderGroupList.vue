@@ -10,7 +10,7 @@
                 >Agregar</CButton
             >
         </div>
-        <div class="folder-group-information">
+        <div v-if="folderIsSelected" class="folder-group-information">
             <div class="document-list">
                 <custom-table
                     @row-selected="showModalInformation"
@@ -19,7 +19,7 @@
                 />
             </div>
             <CButton color="success" @click="showDocumentForm = true"
-                >Agregar</CButton
+                >Agregar documento</CButton
             >
         </div>
     </div>
@@ -82,6 +82,8 @@ export default {
             information: {},
             showGroupForm: false,
             showDocumentForm: false,
+            folderIdSelected: 0,
+            folderIsSelected: false,
         };
     },
     props: {
@@ -108,9 +110,13 @@ export default {
     },
     methods: {
         async searchDocuments(row) {
+            this.folderIsSelected = true;
+            this.folderIdSelected = row.id;
             await this.folderStore.searchByFolder(row.id);
         },
         showModalInformation(selected) {
+            selected.folder_information.legajo = selected.legajo;
+            selected.folder_information.subserie = selected.subserie;
             this.information = selected.folder_information;
             this.showModal = true;
         },
@@ -120,7 +126,9 @@ export default {
             const response = await this.folderGroupStore.add(object);
         },
         async saveDocument(object) {
-            console.log(object);
+            object.folder_group_id = this.folderIdSelected;
+            await this.folderStore.add(object);
+            this.showDocumentForm = false;
         },
     },
     async mounted() {

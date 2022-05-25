@@ -33,7 +33,7 @@ export const useFolderStore = defineStore("folder", {
         async add(object) {
             this.isLoading = true;
             const response = await post(baseUrl, object);
-            await this.all();
+            await this.searchByFolder(object.folder_group_id);
             this.isLoading = false;
             return response;
         },

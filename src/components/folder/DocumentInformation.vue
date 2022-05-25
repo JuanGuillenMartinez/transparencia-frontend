@@ -1,6 +1,24 @@
 <template>
     <form>
         <div class="mb-3">
+            <label class="form-label">Legajo</label>
+            <input
+                :readonly="true"
+                v-model="properties.legajo"
+                type="text"
+                class="form-control"
+            />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Subserie</label>
+            <input
+                :readonly="true"
+                v-model="properties.subserie"
+                type="text"
+                class="form-control"
+            />
+        </div>
+        <div class="mb-3">
             <label class="form-label">Area</label>
             <input
                 :readonly="true"
@@ -58,7 +76,7 @@
             <label class="form-label">Conservación de concentración</label>
             <input
                 :readonly="true"
-                v-model="properties.conservacion_tramite"
+                v-model="properties.conservacion_concentracion"
                 type="text"
                 class="form-control"
             />
@@ -104,24 +122,6 @@
             <input
                 :readonly="true"
                 v-model="properties.localizacion"
-                type="text"
-                class="form-control"
-            />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Conservación de</label>
-            <input
-                :readonly="true"
-                v-model="properties.valor_documental"
-                type="text"
-                class="form-control"
-            />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Conservación de</label>
-            <input
-                :readonly="true"
-                v-model="properties.valor_documental"
                 type="text"
                 class="form-control"
             />
