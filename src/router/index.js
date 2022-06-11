@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import OfficeRouter from "@/router/office/index";
 import SubseccionRouter from "@/router/subseccion/index";
+import BorrowRouter from "@/router/borrow/index";
 
 const routes = [
     // {
@@ -15,6 +16,10 @@ const routes = [
     {
         path: "/subsecciones",
         ...SubseccionRouter,
+    },
+    {
+        path: "/prestamos",
+        ...BorrowRouter,
     },
 ];
 

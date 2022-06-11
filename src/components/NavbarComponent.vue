@@ -17,34 +17,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link dropdown-toggle"
-                            id="navbarDropdown"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Usuarios
-                        </a>
-                        <ul
-                            class="dropdown-menu"
-                            aria-labelledby="navbarDropdown"
-                        >
-                            <li>
-                                <a class="dropdown-item" href="#">Registrar</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Solicitudes</a
-                                >
-                            </li>
-                        </ul>
-                    </li>
-                    <a class="nav-link">Comercios</a>
-                    <a class="nav-link">Solicitudes</a>
-                    <a class="nav-link">Ordenes</a>
-                    <a class="nav-link">Logs</a>
+                    <a @click="$router.push({ path: '/dependencias/todos' })" class="nav-link">Dependencias</a>
+                    <a @click="$router.push({ name: 'BorrowIndexRoute' })" class="nav-link">Prestamos</a>
                 </div>
             </div>
         </div>
