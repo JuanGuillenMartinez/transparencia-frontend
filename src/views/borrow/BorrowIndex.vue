@@ -6,10 +6,18 @@
             :columns="borrowStore.columns"
         />
     </div>
-    <custom-modal @close-modal="showReturnBorrow = false" :visible="showReturnBorrow">
-        <template v-slot:title> titulo </template>
-        <template v-slot:body> body </template>
-        <template v-slot:footer> footer </template>
+    <custom-modal
+        @close-modal="showReturnBorrow = false"
+        :visible="showReturnBorrow"
+    >
+        <template v-slot:title> Marcar carpeta como devuelta </template>
+        <template v-slot:body>
+            Asegúrese de recibir los documentos en buen estado.
+        </template>
+        <template v-slot:footer>
+            <button type="button" class="btn btn-danger">Cancelar</button>
+            <button @click="returnFolder" type="button" class="btn btn-success">Continuar</button>
+        </template>
     </custom-modal>
     <router-view></router-view>
 </template>
@@ -59,8 +67,7 @@ export default {
             }
             if (element.classList.contains("btn-devolver")) {
                 await element.addEventListener("click", async () => {
-                    // this.returnFolder(element.dataset.id);
-                    this.idBorrowSelected = element.dataset.id; 
+                    this.idBorrowSelected = element.dataset.id;
                     this.showReturnBorrow = true;
                 });
             }
@@ -71,8 +78,8 @@ export default {
             }
         },
         async borrowFolder(borrowId) {},
-        async returnFolder(borrowId) {
-            const response = await this.borrowStore.returnFolder(borrowId);
+        async returnFolder() {
+            const response = await this.borrowStore.returnFolder(this.idBorrowSelected);
             console.log(response);
         },
     },
