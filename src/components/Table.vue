@@ -7,6 +7,7 @@
         :sortable="sortable"
         :page-options="quantity"
         @row-clicked="show"
+        @is-finished="emitFinishEvent"
     ></table-lite>
 </template>
 
@@ -46,7 +47,11 @@ export default {
         show(selected) {
             this.$emit("row-selected", selected);
         },
+        emitFinishEvent(element) {
+            this.$emit('is-finished', element);
+        }
     },
+    emits: ['is-finished']
 };
 </script>
 

@@ -4,24 +4,24 @@ export default {
         import(
             /* webpackChunkName: subseccion-index-route */ "@/views/borrow/BorrowIndex.vue"
         ),
-    // children: [
-    //     {
-    //         name: "SubseccionListRoute",
-    //         path: ":id/grupos",
-    //         props: true,
-    //         component: () =>
-    //             import(
-    //                 /* webpackChunkName: subseccion-information-route */ "@/views/folderGroup/FolderGroupList.vue"
-    //             ),
-    //     },
-    //     // {
-    //     //     name: "OfficeInformationRoute",
-    //     //     path: ":id",
-    //     //     props: true,
-    //     //     component: () =>
-    //     //         import(
-    //     //             /* webpackChunkName: subseccion-information-route */ "@/views/office/OfficeInformation.vue"
-    //     //         ),
-    //     // },
-    // ],
+    children: [
+        {
+            name: "BorrowListRoute",
+            path: ":id",
+            props: true,
+            component: () =>
+                import(
+                    /* webpackChunkName: subseccion-information-route */ "@/views/borrow/BorrowInformation.vue"
+                ),
+        },
+        // {
+        //     name: "OfficeInformationRoute",
+        //     path: ":id",
+        //     props: true,
+        //     component: () =>
+        //         import(
+        //             /* webpackChunkName: subseccion-information-route */ "@/views/office/OfficeInformation.vue"
+        //         ),
+        // },
+    ],
 };
