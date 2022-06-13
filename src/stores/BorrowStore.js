@@ -46,6 +46,13 @@ export const useBorrowStore = defineStore("borrow", {
             this.isLoading = false;
             return response;
         },
+        async relendFolder(borrowId) {
+            this.isLoading = true;
+            const response = await get(`${baseUrl}/${borrowId}/relend`);
+            await this.all();
+            this.isLoading = false;
+            return response;
+        },
     },
     getters: {
         listFormatted() {

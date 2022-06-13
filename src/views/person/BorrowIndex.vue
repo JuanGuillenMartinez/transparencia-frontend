@@ -15,37 +15,8 @@
             Asegúrese de recibir los documentos en buen estado.
         </template>
         <template v-slot:footer>
-            <button
-                @click="showReturnBorrow = false"
-                type="button"
-                class="btn btn-danger"
-            >
-                Cancelar
-            </button>
-            <button @click="returnFolder" type="button" class="btn btn-success">
-                Continuar
-            </button>
-        </template>
-    </custom-modal>
-    <custom-modal
-        @close-modal="showBorrowModal = false"
-        :visible="showBorrowModal"
-    >
-        <template v-slot:title> Volver a prestar </template>
-        <template v-slot:body>
-            La carpeta sera prestada de nuevo al mismo usuario.
-        </template>
-        <template v-slot:footer>
-            <button
-                @click="showBorrowModal = false"
-                type="button"
-                class="btn btn-danger"
-            >
-                Cancelar
-            </button>
-            <button @click="relendFolder" type="button" class="btn btn-success">
-                Prestar de nuevo
-            </button>
+            <button type="button" class="btn btn-danger">Cancelar</button>
+            <button @click="returnFolder" type="button" class="btn btn-success">Continuar</button>
         </template>
     </custom-modal>
     <router-view></router-view>
@@ -70,7 +41,6 @@ export default {
             showTable: true,
             showReturnBorrow: false,
             idBorrowSelected: 0,
-            showBorrowModal: false,
         };
     },
     computed: {
@@ -102,23 +72,15 @@ export default {
                 });
             }
             if (element.classList.contains("btn-prestar")) {
-                await element.addEventListener("click", async () => {
-                    this.idBorrowSelected = element.dataset.id;
-                    this.showBorrowModal = true;
-                });
+                // await element.addEventListener("click", async () => {
+                //     this.returnFolder(element.dataset.id);
+                // });
             }
         },
-        async relendFolder() {
-            const response = await this.borrowStore.relendFolder(
-                this.idBorrowSelected
-            );
-            this.showBorrowModal = false;
-        },
+        async borrowFolder(borrowId) {},
         async returnFolder() {
-            const response = await this.borrowStore.returnFolder(
-                this.idBorrowSelected
-            );
-            this.showReturnBorrow = false;
+            const response = await this.borrowStore.returnFolder(this.idBorrowSelected);
+            console.log(response);
         },
     },
     async created() {
