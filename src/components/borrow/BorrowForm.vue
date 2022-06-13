@@ -1,42 +1,76 @@
 <template>
     <form>
         <div class="mb-3">
+            <label class="form-label">Solicitante</label>
+            <v-select
+                v-model="properties.person"
+                label="nombre"
+                :options="personStore.list"
+            />
+        </div>
+        <div class="mb-3">
             <label class="form-label">Serie</label>
-            <input
-                :readonly="readonly"
-                v-model="properties.serie"
-                type="text"
-                class="form-control"
+            <v-select
+                v-model="properties.folderGroup"
+                label="serie"
+                :options="folderGroup"
             />
         </div>
         <div class="mb-3">
             <label class="form-label">Estatus</label>
-            <input
-                :readonly="readonly"
+            <v-select
+                placeholder="prestado"
+                :disabled="readonly"
                 v-model="properties.estatus"
-                type="text"
-                class="form-control"
+                :options="['prestado', 'disponible']"
             />
         </div>
-        <button @click="$emit('save-clicked', properties)" type="button" class="btn btn-primary">Guardar</button>
+        <button @click="emitSaveEvent" type="button" class="btn btn-primary">
+            Guardar
+        </button>
     </form>
 </template>
 
 <script>
 import { clone } from "@/helpers/Object";
+import { mapStores } from "pinia";
+import { usePersonStore } from "@/stores/PersonStore";
+import { useFolderGroupStore } from "@/stores/folderGroup/FolderGroupStore";
+
 export default {
     props: {
         object: {
             type: Object,
             default: {},
         },
-        readonly: Boolean,
+        readonly: {
+            type: Boolean,
+            default: true,
+        },
     },
-    emits: ['save-clicked'],
+    data() {
+        return {
+            folderGroup: [],
+        }
+    },
+    emits: ["save-clicked"],
     computed: {
+        ...mapStores(usePersonStore, useFolderGroupStore),
         properties() {
             return clone(this.object);
         },
+    },
+    methods: {
+        emitSaveEvent() {
+            this.properties.folder_group_id = this.properties.folderGroup.id;
+            this.properties.person_id = this.properties.person.id;
+            this.$emit("save-clicked", this.properties);
+        },
+    },
+    async created() {
+        await this.personStore.all();
+        const response = await this.folderGroupStore.availables();
+        this.folderGroup = response.data;
     },
 };
 </script>

@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { getAll, get, post, put } from "../helpers/Request";
 
-const baseUrl = "/borrows";
+const baseUrl = "/persons";
 
-export const useBorrowStore = defineStore("borrow", {
+export const usePersonStore = defineStore("person", {
     state: () => {
         return {
             list: [],
@@ -35,13 +35,6 @@ export const useBorrowStore = defineStore("borrow", {
         async add(object) {
             this.isLoading = true;
             const response = await post(baseUrl, object);
-            await this.all();
-            this.isLoading = false;
-            return response;
-        },
-        async update(id, attributes) {
-            this.isLoading = true;
-            const response = await put(`${baseUrl}/${id}`, attributes);
             await this.all();
             this.isLoading = false;
             return response;
@@ -135,13 +128,16 @@ const headers = [
         sortable: true,
         display: function (row) {
             const borrowId = row.id;
-            const btnDevolver = `<button type="button" class="btn btn-secondary is-rows-el btn-devolver" data-id="${borrowId}">Devolver</button>`;
-            const btnPrestar = `<button type="button" class="btn btn-secondary is-rows-el btn-prestar" data-id="${borrowId}">Prestar</button>`;
+            const btnDevolver = `<button type="button" class="btn btn-primary is-rows-el btn-devolver" data-id="${borrowId}">Devolver</button>`;
+            const btnPrestar = `<button type="button" class="btn btn-success is-rows-el btn-prestar" data-id="${borrowId}">Prestar</button>`;
             return `
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 4px;">
-                <button title="Mas información" type="button" data-subseccion="${ row.folder_group.subdepartment.id }" data-id="${ row.id }" class="is-rows-el btn-ver btn btn-light">Ver</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 4px;">
+                <button title="Mas información" type="button" data-subseccion="${
+                    row.folder_group.subdepartment.id
+                }" data-id="${
+                row.id
+            }" class="is-rows-el btn-ver btn btn-secondary">Ver</button>
                 ${row.estatus === "prestado" ? btnDevolver : btnPrestar}
-                <button type="button" class="btn btn-primary is-rows-el btn-update-borrow" data-id="${borrowId}">Actualizar</button>
             </div>
             `;
         },

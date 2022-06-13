@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { getAll, get, post } from "@/helpers/Request";
-import headers from "@/helpers/TableHeaders/FolderGroup"
+import headers from "@/helpers/TableHeaders/FolderGroup";
 const baseUrl = "/folder-groups";
 export const useFolderGroupStore = defineStore("folderGroup", {
     state: () => {
@@ -28,11 +28,9 @@ export const useFolderGroupStore = defineStore("folderGroup", {
             this.isLoading = false;
             return response;
         },
-        async add(object) {
+        async availables() {
             this.isLoading = true;
-            const response = await post(baseUrl, object);
-            const responseGroups = await get(`/subdepartments/${object.subdepartment_id}/groups`);
-            this.list = responseGroups.data;
+            const response = await get(`/available/folder-groups`);
             this.isLoading = false;
             return response;
         },
@@ -42,6 +40,6 @@ export const useFolderGroupStore = defineStore("folderGroup", {
             // await this.all();
             // this.isLoading = false;
             // return response;
-        }
+        },
     },
 });

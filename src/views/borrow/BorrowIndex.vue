@@ -1,9 +1,15 @@
 <template>
     <div v-if="showTable" class="borrow-table">
         <custom-table
+            @row-selected="setRowSelected"
             @is-finished="tableLoadingFinish"
             :rows="borrowStore.list"
             :columns="borrowStore.columns"
+        />
+        <float-button
+            @button-clicked="showAddBorrowForm = true"
+            icon="fa fa-plus"
+            color-class="btn-primary"
         />
     </div>
     <custom-modal
@@ -48,6 +54,24 @@
             </button>
         </template>
     </custom-modal>
+    <custom-modal
+        :visible="showAddBorrowForm"
+        @close-modal="showAddBorrowForm = false"
+    >
+        <template v-slot:title> Prestar carpeta </template>
+        <template v-slot:body>
+            <borrow-form @save-clicked="saveBorrow" />
+        </template>
+    </custom-modal>
+    <custom-modal
+        :visible="showUpdateBorrowForm"
+        @close-modal="showUpdateBorrowForm = false"
+    >
+        <template v-slot:title> Actualizar información del préstamo </template>
+        <template v-slot:body>
+            <borrow-form :readonly="false" :object="borrowSelected" @save-clicked="updateBorrow" />
+        </template>
+    </custom-modal>
     <router-view></router-view>
 </template>
 
@@ -64,6 +88,12 @@ export default {
         CustomModal: defineAsyncComponent(() =>
             import("@/components/Modal.vue")
         ),
+        FloatButton: defineAsyncComponent(() =>
+            import("@/components/FloatButton.vue")
+        ),
+        BorrowForm: defineAsyncComponent(() =>
+            import("@/components/borrow/BorrowForm.vue")
+        ),
     },
     data() {
         return {
@@ -71,6 +101,10 @@ export default {
             showReturnBorrow: false,
             idBorrowSelected: 0,
             showBorrowModal: false,
+            showAddBorrowForm: false,
+            showUpdateBorrowForm: false,
+            selected: {},
+            borrowSelected: {},
         };
     },
     computed: {
@@ -107,6 +141,12 @@ export default {
                     this.showBorrowModal = true;
                 });
             }
+            if (element.classList.contains("btn-update-borrow")) {
+                await element.addEventListener("click", async () => {
+                    // this.selected = element.dataset.id;
+                    this.showUpdateBorrowForm = true;
+                });
+            }
         },
         async relendFolder() {
             const response = await this.borrowStore.relendFolder(
@@ -120,11 +160,23 @@ export default {
             );
             this.showReturnBorrow = false;
         },
+        async saveBorrow(object) {
+            console.log(object);
+            const response = await this.borrowStore.add(object);
+            this.showAddBorrowForm = false;
+        },
+        setRowSelected(row) {
+            this.borrowSelected = row;
+            this.borrowSelected.folderGroup = row.folder_group;
+        },
+        async updateBorrow(object) {
+            const response = await this.borrowStore.update(this.borrowSelected.id, object);
+            this.showUpdateBorrowForm = false;
+        },
     },
     async created() {
         this.showTable = true;
         await this.borrowStore.all();
-        console.log(this.$route.path);
     },
 };
 </script>
