@@ -19,6 +19,7 @@
                 <div class="navbar-nav">
                     <a @click="$router.push({ path: '/dependencias/todos' })" class="nav-link">Dependencias</a>
                     <a @click="$router.push({ name: 'BorrowIndexRoute' })" class="nav-link">Prestamos</a>
+                    <a @click="$router.push({ name: 'UserIndexRoute' })" class="nav-link">Empleados</a>
                 </div>
             </div>
         </div>

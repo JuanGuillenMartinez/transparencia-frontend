@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import OfficeRouter from "@/router/office/index";
 import SubseccionRouter from "@/router/subseccion/index";
 import BorrowRouter from "@/router/borrow/index";
+import UserRouter from "@/router/user/index";
 
 const routes = [
     // {
@@ -20,6 +21,10 @@ const routes = [
     {
         path: "/prestamos",
         ...BorrowRouter,
+    },
+    {
+        path: "/empleados",
+        ...UserRouter,
     },
 ];
 
