@@ -137,7 +137,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .list-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
