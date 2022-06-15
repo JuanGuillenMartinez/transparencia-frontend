@@ -4,8 +4,8 @@
         <div class="user-group">
             <custom-table
                 @row-selected="setSelectedItem"
-                :columns="userStore.columns"
-                :rows="userStore.list"
+                :columns="personStore.columns"
+                :rows="personStore.list"
             />
             <CButton color="success" @click="showGroupForm = true"
                 >Agregar</CButton
@@ -55,7 +55,7 @@
 import { defineAsyncComponent } from "@vue/runtime-core";
 import { mapStores } from "pinia";
 import { CButton } from "@coreui/vue";
-import { useUserStore } from "@/stores/UserStore";
+import { usePersonStore } from "@/stores/PersonStore";
 
 export default {
     components: {
@@ -83,12 +83,16 @@ export default {
     },
     methods: {
         setSelectedItem(rowClicked) {
+            console.log(rowClicked);
             this.selectedItem = rowClicked;
         }
     },
     computed: {
-        ...mapStores(useUserStore),
+        ...mapStores(usePersonStore),
     },
+    async created() {
+        await this.personStore.all();
+    }
 };
 </script>
 
