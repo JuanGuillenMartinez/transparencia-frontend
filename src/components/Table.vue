@@ -51,7 +51,7 @@ export default {
             this.$emit('is-finished', element);
         }
     },
-    emits: ['is-finished']
+    emits: ['is-finished', 'row-selected']
 };
 </script>
 
