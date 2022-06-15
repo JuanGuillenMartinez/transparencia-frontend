@@ -2,7 +2,7 @@ export default {
     name: "UserIndexRoute",
     component: () =>
         import(
-            /* webpackChunkName: subseccion-index-route */ "@/views/user/UserIndex.vue"
+            /* webpackChunkName: subseccion-index-route */ "@/views/person/UserIndex.vue"
         ),
     children: [
         // {

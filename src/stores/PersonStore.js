@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getAll, get, post, put } from "../helpers/Request";
+import { getAll, get, post, put, deleteRequest } from "../helpers/Request";
 
 const baseUrl = "/persons";
 
@@ -39,16 +39,16 @@ export const usePersonStore = defineStore("person", {
             this.isLoading = false;
             return response;
         },
-        async returnFolder(borrowId) {
+        async updateRow(object) {
             this.isLoading = true;
-            const response = await get(`${baseUrl}/${borrowId}/return`);
+            const response = await put(`${baseUrl}/${object.id}`, object);
             await this.all();
             this.isLoading = false;
             return response;
         },
-        async relendFolder(borrowId) {
+        async deleteRow(id) {
             this.isLoading = true;
-            const response = await get(`${baseUrl}/${borrowId}/relend`);
+            const response = await deleteRequest(`${baseUrl}/${id}`);
             await this.all();
             this.isLoading = false;
             return response;
@@ -85,61 +85,18 @@ const headers = [
         isKey: true,
     },
     {
-        label: "Solicitante",
+        label: "Empleado",
         field: "person",
         width: "10%",
         sortable: true,
-        display: function (row) {
-            const person = row.person;
+        display: function (person) {
             return `${person.nombre} ${person.apellido_paterno} ${person.apellido_materno}`;
         },
     },
     {
-        label: "Serie",
-        field: "folder_group",
+        label: "ID interno",
+        field: "id_interno",
         width: "10%",
         sortable: true,
-        display: function (row) {
-            return row.folder_group.serie;
-        },
-    },
-    {
-        label: "Estatus",
-        field: "estatus",
-        width: "10%",
-        sortable: true,
-    },
-    {
-        label: "Prestado el",
-        field: "prestado_el",
-        width: "10%",
-        sortable: true,
-    },
-    {
-        label: "Devuelto el",
-        field: "fecha_devolucion",
-        width: "10%",
-        sortable: true,
-    },
-    {
-        label: "Acciones",
-        field: "quick",
-        width: "5%",
-        sortable: true,
-        display: function (row) {
-            const borrowId = row.id;
-            const btnDevolver = `<button type="button" class="btn btn-primary is-rows-el btn-devolver" data-id="${borrowId}">Devolver</button>`;
-            const btnPrestar = `<button type="button" class="btn btn-success is-rows-el btn-prestar" data-id="${borrowId}">Prestar</button>`;
-            return `
-            <div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 4px;">
-                <button title="Mas información" type="button" data-subseccion="${
-                    row.folder_group.subdepartment.id
-                }" data-id="${
-                row.id
-            }" class="is-rows-el btn-ver btn btn-secondary">Ver</button>
-                ${row.estatus === "prestado" ? btnDevolver : btnPrestar}
-            </div>
-            `;
-        },
     },
 ];

@@ -18,11 +18,10 @@ export const get = async (url) => {
     return data;
 };
 
-export const deleteRequest = async (url, data) => {
-    if (data) {
-        return await axios.getInstance().delete(`${url}/${data}`);
-    }
-    return await axios.getInstance().delete(url);
+export const deleteRequest = async (url) => {
+    const response = await axios.getInstance().delete(url);
+    const { data: results } = response;
+    return results;
 };
 
 export const update = async (url, data) => {
@@ -33,6 +32,8 @@ export const update = async (url, data) => {
 
 export const put = async (url, data) => {
     if (data) {
-        return await axios.getInstance().put(url, data);
+        const response = await axios.getInstance().put(url, data);
+        const { data: results } = response;
+        return results;
     }
 };
