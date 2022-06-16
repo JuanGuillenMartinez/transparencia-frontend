@@ -35,6 +35,15 @@ export const useOfficeStore = defineStore("office", {
             this.isLoading = false;
             return response;
         },
+        async updateRow(object) {
+            this.isLoading = true;
+            //TODO Agregar endpoint de actualización en el backend
+            // const response = await put(`${baseUrl}/${object.id}`, object);
+            await this.find(object.id);
+            console.log(object);
+            this.isLoading = false;
+            // return response;
+        },
         async addDepartment(officeId, object) {
             object.office_id = officeId;
             this.isLoading = true;

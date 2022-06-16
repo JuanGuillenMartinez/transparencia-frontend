@@ -27,7 +27,8 @@
                 class="form-control"
             />
         </div>
-        <button @click="$emit('save-clicked', properties)" type="button" class="btn btn-primary">Guardar</button>
+        <button v-if="readonly" @click="readonly=false" type="button" class="btn btn-primary">Editar</button>
+        <button v-else @click="$emit('update-clicked', properties); readonly=false" type="button" class="btn btn-success">Guardar</button>
     </form>
 </template>
 

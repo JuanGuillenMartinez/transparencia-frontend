@@ -1,6 +1,8 @@
 <template>
     <div class="container-information">
-        <office-form :readonly="true" :object="office" />
+        <div>
+            <office-form @update-clicked="updateOffice" :readonly="true" :object="office" />
+        </div>
         <div class="container-relations">
             <div class="container-department-table">
                 <custom-table
@@ -13,7 +15,10 @@
                     >Agregar</CButton
                 >
             </div>
-            <div v-if="visibleSubdepartmentsTable" class="container-subdepartment-table">
+            <div
+                v-if="visibleSubdepartmentsTable"
+                class="container-subdepartment-table"
+            >
                 <custom-table
                     @row-selected="goToDocuments"
                     :columns="subdepartmentHeaders"
@@ -108,7 +113,7 @@ export default {
         },
         subdepartments() {
             return this.officeStore.subdepartmentsSelected;
-        }
+        },
     },
     methods: {
         selectDepartment(department) {
@@ -130,12 +135,21 @@ export default {
         },
         async saveDepartment(properties) {
             this.visibleDepartmentForm = false;
-            const response = await this.officeStore.addDepartment(this.id, properties);
+            const response = await this.officeStore.addDepartment(
+                this.id,
+                properties
+            );
         },
         async saveSubdepartment(properties) {
             this.visibleSubdepartmentForm = false;
-            const response = await this.officeStore.addSubdepartment(this.departmentId, properties);
+            const response = await this.officeStore.addSubdepartment(
+                this.departmentId,
+                properties
+            );
         },
+        async updateOffice(properties) {
+            const response = await this.officeStore.updateRow(properties);
+        }
     },
     async mounted() {
         await this.officeStore.find(this.id);
