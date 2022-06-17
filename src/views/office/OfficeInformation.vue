@@ -187,6 +187,8 @@ export default {
 .container-information {
     display: grid;
     grid-template-columns: 4fr 6fr;
+    column-gap: 12px;
+    margin: 12px;
 }
 .container-relations {
     display: grid;
