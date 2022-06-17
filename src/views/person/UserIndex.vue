@@ -1,11 +1,16 @@
 <template>
-    <div class="list-container">
-        <div class="user-group">
-            <custom-table
-                @row-selected="openInformationForm"
-                :columns="personStore.columns"
-                :rows="personStore.list"
-            />
+    <div class="card">
+        <div class="card-body">
+        <title-tab class="title-employees"><h1>Empleados</h1></title-tab>
+            <div class="list-container">
+                <div class="user-group">
+                    <custom-table
+                        @row-selected="openInformationForm"
+                        :columns="personStore.columns"
+                        :rows="personStore.list"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 
@@ -69,6 +74,9 @@ export default {
         FloatButton: defineAsyncComponent(() =>
             import("@/components/IconButton.vue")
         ),
+        TitleTab: defineAsyncComponent(() =>
+            import("@/components/TitleTab.vue")
+        ),
         CButton,
     },
     data() {
@@ -101,7 +109,7 @@ export default {
             const response = await this.personStore.deleteRow(properties.id);
             console.log(response);
             this.showInformationForm = false;
-        }
+        },
     },
     computed: {
         ...mapStores(usePersonStore),
@@ -112,4 +120,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+/* .title-employees {
+    margin-bottom: 12px;
+} */
+</style>
