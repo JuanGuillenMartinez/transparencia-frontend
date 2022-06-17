@@ -1,11 +1,20 @@
 <template>
-    <custom-table
-        v-if="!isLoading && !showForm"
-        @row-selected="goToInformation"
-        :columns="columns"
-        :rows="offices"
-    />
-    <office-form @save-clicked="add" v-else :readonly="false" />
+    <div v-if="!isLoading && !showForm" class="card">
+        <div class="card-body">
+            <title-tab>Departamentos</title-tab>
+            <custom-table
+                @row-selected="goToInformation"
+                :columns="columns"
+                :rows="offices"
+            />
+        </div>
+    </div>
+    <div class="card" v-else>
+        <div class="card-body">
+            <title-tab>Departamentos</title-tab>
+            <office-form class="form-add-office" @save-clicked="add" :readonly="false" />
+        </div>
+    </div>
     <div class="button-group">
         <float-button
             v-if="!showForm"
@@ -44,6 +53,9 @@ export default {
         ),
         OfficeForm: defineAsyncComponent(() =>
             import("@/components/office/OfficeForm.vue")
+        ),
+        TitleTab: defineAsyncComponent(() =>
+            import("@/components/TitleTab.vue")
         ),
     },
     data() {
@@ -97,5 +109,8 @@ export default {
     row-gap: 2px;
     right: 12px;
     bottom: 12px;
+}
+.form-add-office {
+    margin-top: 24px;
 }
 </style>

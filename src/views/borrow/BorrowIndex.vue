@@ -1,16 +1,21 @@
 <template>
-    <div v-if="showTable" class="borrow-table">
-        <custom-table
-            @row-selected="setRowSelected"
-            @is-finished="tableLoadingFinish"
-            :rows="borrowStore.list"
-            :columns="borrowStore.columns"
-        />
-        <float-button
-            @button-clicked="showAddBorrowForm = true"
-            icon="fa fa-plus"
-            color-class="btn-primary"
-        />
+    <div class="card">
+        <div class="card-body">
+            <title-tab>Prestamos</title-tab>
+            <div v-if="showTable" class="borrow-table">
+                <custom-table
+                    @row-selected="setRowSelected"
+                    @is-finished="tableLoadingFinish"
+                    :rows="borrowStore.list"
+                    :columns="borrowStore.columns"
+                />
+                <float-button
+                    @button-clicked="showAddBorrowForm = true"
+                    icon="fa fa-plus"
+                    color-class="btn-primary"
+                />
+            </div>
+        </div>
     </div>
     <custom-modal
         @close-modal="showReturnBorrow = false"
@@ -69,7 +74,11 @@
     >
         <template v-slot:title> Actualizar información del préstamo </template>
         <template v-slot:body>
-            <borrow-form :readonly="false" :object="borrowSelected" @save-clicked="updateBorrow" />
+            <borrow-form
+                :readonly="false"
+                :object="borrowSelected"
+                @save-clicked="updateBorrow"
+            />
         </template>
     </custom-modal>
     <router-view></router-view>
@@ -93,6 +102,9 @@ export default {
         ),
         BorrowForm: defineAsyncComponent(() =>
             import("@/components/borrow/BorrowForm.vue")
+        ),
+        TitleTab: defineAsyncComponent(() =>
+            import("@/components/TitleTab.vue")
         ),
     },
     data() {
@@ -170,7 +182,10 @@ export default {
             this.borrowSelected.folderGroup = row.folder_group;
         },
         async updateBorrow(object) {
-            const response = await this.borrowStore.update(this.borrowSelected.id, object);
+            const response = await this.borrowStore.update(
+                this.borrowSelected.id,
+                object
+            );
             this.showUpdateBorrowForm = false;
         },
     },
