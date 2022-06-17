@@ -1,28 +1,59 @@
 <template>
     <div class="container-information">
-        <office-form :readonly="true" :object="office" />
+        <div class="card">
+            <div class="card-body">
+                <title-tab
+                    ><h1 style="text-align: center">
+                        Información de la dependencia
+                    </h1></title-tab
+                >
+                <office-form
+                    class="form-office-information"
+                    :readonly="true"
+                    :object="office"
+                />
+            </div>
+        </div>
         <div class="container-relations">
             <div class="container-department-table">
-                <custom-table
-                    @row-selected="selectDepartment"
-                    :columns="departmentHeaders"
-                    :rows="departments"
-                    :quantity-show="5"
-                />
-                <CButton @click="showDepartmentForm" color="success"
-                    >Agregar</CButton
-                >
+                <div class="card">
+                    <div class="card-body">
+                        <title-tab style="text-align: center"
+                            >Secciones</title-tab
+                        >
+                        <custom-table
+                            @row-selected="selectDepartment"
+                            :columns="departmentHeaders"
+                            :rows="departments"
+                            :quantity-show="5"
+                        />
+                        <CButton
+                            style="margin-top: 12px"
+                            @click="showDepartmentForm"
+                            color="success"
+                            >Registrar sección</CButton
+                        >
+                    </div>
+                </div>
             </div>
-            <div v-if="visibleSubdepartmentsTable" class="container-subdepartment-table">
-                <custom-table
-                    @row-selected="goToDocuments"
-                    :columns="subdepartmentHeaders"
-                    :rows="subdepartments"
-                    :quantity-show="5"
-                />
-                <CButton @click="showSubdepartmentForm" color="success"
-                    >Agregar</CButton
-                >
+            <div
+                v-if="visibleSubdepartmentsTable"
+                class="container-subdepartment-table"
+            >
+                <div class="card">
+                    <div class="card-body">
+                        <title-tab style="text-align: center">Subsecciones</title-tab>
+                        <custom-table
+                            @row-selected="goToDocuments"
+                            :columns="subdepartmentHeaders"
+                            :rows="subdepartments"
+                            :quantity-show="5"
+                        />
+                        <CButton style="margin-top: 12px" @click="showSubdepartmentForm" color="success"
+                            >Registrar Subsección</CButton
+                        >
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -77,6 +108,9 @@ export default {
         DepartmentForm: defineAsyncComponent(() =>
             import("@/components/department/DepartmentForm.vue")
         ),
+        TitleTab: defineAsyncComponent(() =>
+            import("@/components/TitleTab.vue")
+        ),
         CButton,
         CustomModal,
     },
@@ -108,7 +142,7 @@ export default {
         },
         subdepartments() {
             return this.officeStore.subdepartmentsSelected;
-        }
+        },
     },
     methods: {
         selectDepartment(department) {
@@ -130,11 +164,17 @@ export default {
         },
         async saveDepartment(properties) {
             this.visibleDepartmentForm = false;
-            const response = await this.officeStore.addDepartment(this.id, properties);
+            const response = await this.officeStore.addDepartment(
+                this.id,
+                properties
+            );
         },
         async saveSubdepartment(properties) {
             this.visibleSubdepartmentForm = false;
-            const response = await this.officeStore.addSubdepartment(this.departmentId, properties);
+            const response = await this.officeStore.addSubdepartment(
+                this.departmentId,
+                properties
+            );
         },
     },
     async mounted() {
@@ -151,5 +191,8 @@ export default {
 .container-relations {
     display: grid;
     grid-template-rows: 1fr 1fr;
+}
+.form-office-information {
+    margin-top: 32px;
 }
 </style>
