@@ -9,6 +9,7 @@
                 >
                 <office-form
                     @update-clicked="updateOffice"
+                    @delete-clicked="deleteOffice"
                     class="form-office-information"
                     :readonly="true"
                     :object="office"
@@ -43,14 +44,19 @@
             >
                 <div class="card">
                     <div class="card-body">
-                        <title-tab style="text-align: center">Subsecciones</title-tab>
+                        <title-tab style="text-align: center"
+                            >Subsecciones</title-tab
+                        >
                         <custom-table
                             @row-selected="goToDocuments"
                             :columns="subdepartmentHeaders"
                             :rows="subdepartments"
                             :quantity-show="5"
                         />
-                        <CButton style="margin-top: 12px" @click="showSubdepartmentForm" color="success"
+                        <CButton
+                            style="margin-top: 12px"
+                            @click="showSubdepartmentForm"
+                            color="success"
                             >Registrar Subsección</CButton
                         >
                     </div>
@@ -179,7 +185,11 @@ export default {
         },
         async updateOffice(properties) {
             const response = await this.officeStore.updateRow(properties);
-        }
+        },
+        async deleteOffice(properties) {
+            const response = await this.officeStore.deleteRow(properties.id);
+            this.$router.replace({ name: "OfficeListRoute" });
+        },
     },
     async mounted() {
         await this.officeStore.find(this.id);

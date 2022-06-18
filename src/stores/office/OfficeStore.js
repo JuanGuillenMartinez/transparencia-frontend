@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getAll, get, post, put } from "@/helpers/Request";
+import { getAll, get, post, put, deleteRequest } from "@/helpers/Request";
 const baseUrl = "/offices";
 export const useOfficeStore = defineStore("office", {
     state: () => {
@@ -37,7 +37,6 @@ export const useOfficeStore = defineStore("office", {
         },
         async updateRow(object) {
             this.isLoading = true;
-            //TODO Agregar endpoint de actualización en el backend
             const response = await put(`${baseUrl}/${object.id}`, object);
             await this.find(object.id);
             console.log(object);
@@ -70,5 +69,11 @@ export const useOfficeStore = defineStore("office", {
             );
             return found;
         },
+        async deleteRow(id) {
+            this.isLoading = true;
+            const response = await deleteRequest(`${baseUrl}/${id}`);
+            this.isLoading = false;
+            return response;
+        }
     },
 });
