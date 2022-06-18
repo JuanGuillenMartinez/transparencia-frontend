@@ -8,6 +8,7 @@
                     </h1></title-tab
                 >
                 <office-form
+                    @update-clicked="updateOffice"
                     class="form-office-information"
                     :readonly="true"
                     :object="office"
