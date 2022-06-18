@@ -3,13 +3,14 @@ import OfficeRouter from "@/router/office/index";
 import SubseccionRouter from "@/router/subseccion/index";
 import BorrowRouter from "@/router/borrow/index";
 import UserRouter from "@/router/user/index";
+import HomeView from "@/views/home/HomeView.vue";
 
 const routes = [
-    // {
-    //     path: "/",
-    //     name: "home",
-    //     component: HomeView,
-    // },
+    {
+        path: "/",
+        name: "home",
+        component: HomeView,
+    },
     {
         path: "/dependencias",
         ...OfficeRouter,

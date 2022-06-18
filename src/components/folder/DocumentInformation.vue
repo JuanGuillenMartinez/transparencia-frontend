@@ -101,11 +101,11 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Clasificación de información</label>
-            <input
-                :readonly="true"
+            <v-select
+                :disabled="true"
+                placeholder="confidencial"
                 v-model="properties.clasificacion_informacion"
-                type="text"
-                class="form-control"
+                :options="['confidencial', 'reservado']"
             />
         </div>
         <div class="mb-3">

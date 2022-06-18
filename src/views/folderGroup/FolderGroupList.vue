@@ -1,26 +1,36 @@
 <template>
     <div class="list-container">
-        <div class="folder-group">
-            <custom-table
-                @row-selected="searchDocuments"
-                :columns="tableHeaders"
-                :rows="folderGroupList"
-            />
-            <CButton color="success" @click="showGroupForm = true"
-                >Agregar</CButton
-            >
+        <div class="card">
+            <div class="card-body">
+                <title-tab>Carpetas</title-tab>
+                <div class="folder-group">
+                    <custom-table
+                        @row-selected="searchDocuments"
+                        :columns="tableHeaders"
+                        :rows="folderGroupList"
+                    />
+                    <CButton class="btn-custom" color="success" @click="showGroupForm = true"
+                        >Agregar</CButton
+                    >
+                </div>
+            </div>
         </div>
         <div v-if="folderIsSelected" class="folder-group-information">
-            <div class="document-list">
-                <custom-table
-                    @row-selected="showModalInformation"
-                    :columns="folderHeaders"
-                    :rows="folderList"
-                />
+            <div class="card">
+                <div class="card-body">
+                    <title-tab>Legajos</title-tab>
+                    <div class="document-list">
+                        <custom-table
+                            @row-selected="showModalInformation"
+                            :columns="folderHeaders"
+                            :rows="folderList"
+                        />
+                    </div>
+                    <CButton class="btn-custom" color="success" @click="showDocumentForm = true"
+                        >Agregar documento</CButton
+                    >
+                </div>
             </div>
-            <CButton color="success" @click="showDocumentForm = true"
-                >Agregar documento</CButton
-            >
         </div>
     </div>
     <custom-modal
@@ -56,6 +66,7 @@ import { useSubdepartmentStore } from "@/stores/subdepartment/SubdepartmentStore
 import { useFolderGroupStore } from "@/stores/folderGroup/FolderGroupStore";
 import { useFolderStore } from "@/stores/folder/FolderStore";
 import { CButton } from "@coreui/vue";
+import TitleTab from "@/components/TitleTab.vue";
 export default {
     components: {
         CustomTable: defineAsyncComponent(() =>
@@ -72,6 +83,9 @@ export default {
         ),
         FolderForm: defineAsyncComponent(() =>
             import("@/components/folder/FolderForm.vue")
+        ),
+        TitleTab: defineAsyncComponent(() =>
+            import("@/components/TitleTab.vue")
         ),
         CButton,
     },
@@ -141,9 +155,14 @@ export default {
 .list-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    column-gap: 12px;
+    margin: 12px;
 }
 /* .folder-group-information {
     display: grid;
     grid-template-rows: 1fr 1fr;
 } */
+.btn-custom {
+    margin-top: 12px;
+}
 </style>
