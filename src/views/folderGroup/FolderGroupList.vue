@@ -5,11 +5,15 @@
                 <title-tab>Carpetas</title-tab>
                 <div class="folder-group">
                     <custom-table
+                        @is-finished="tableLoadingFinish"
                         @row-selected="searchDocuments"
                         :columns="tableHeaders"
                         :rows="folderGroupList"
                     />
-                    <CButton class="btn-custom" color="success" @click="showGroupForm = true"
+                    <CButton
+                        class="btn-custom"
+                        color="success"
+                        @click="showGroupForm = true"
                         >Agregar</CButton
                     >
                 </div>
@@ -26,7 +30,10 @@
                             :rows="folderList"
                         />
                     </div>
-                    <CButton class="btn-custom" color="success" @click="showDocumentForm = true"
+                    <CButton
+                        class="btn-custom"
+                        color="success"
+                        @click="showDocumentForm = true"
                         >Agregar documento</CButton
                     >
                 </div>
@@ -57,6 +64,15 @@
     >
         <document-information :properties="information" />
     </custom-modal>
+    <modal-custom
+        :visible="showFolderGroupModal"
+        @close-modal="showFolderGroupModal = false"
+    >
+        <template v-slot:title> Actualizar información del préstamo </template>
+        <template v-slot:body>
+            <form-folder-group @delete-clicked="deleteFolderGroup" @update-clicked="updateFolderGroup" :object="folderGroupSelected" />
+        </template>
+    </modal-custom>
 </template>
 
 <script>
@@ -87,6 +103,12 @@ export default {
         TitleTab: defineAsyncComponent(() =>
             import("@/components/TitleTab.vue")
         ),
+        ModalCustom: defineAsyncComponent(() =>
+            import("@/components/Modal.vue")
+        ),
+        FormFolderGroup: defineAsyncComponent(() =>
+            import("@/components/folderGroup/FormFolderGroup.vue")
+        ),
         CButton,
     },
     data() {
@@ -98,6 +120,8 @@ export default {
             showDocumentForm: false,
             folderIdSelected: 0,
             folderIsSelected: false,
+            folderGroupSelected: {},
+            showFolderGroupModal: false,
         };
     },
     props: {
@@ -124,6 +148,7 @@ export default {
     },
     methods: {
         async searchDocuments(row) {
+            this.folderGroupSelected = row;
             this.folderIsSelected = true;
             this.folderIdSelected = row.id;
             await this.folderStore.searchByFolder(row.id);
@@ -143,6 +168,26 @@ export default {
             object.folder_group_id = this.folderIdSelected;
             await this.folderStore.add(object);
             this.showDocumentForm = false;
+        },
+        async tableLoadingFinish(elements) {
+            for (let item of elements) {
+                this.addEventButtons(item);
+            }
+        },
+        async addEventButtons(element) {
+            if (element.classList.contains("btn-update-folder-group")) {
+                await element.addEventListener("click", async () => {
+                    this.showFolderGroupModal = true;
+                });
+            }
+        },
+        async updateFolderGroup(properties) {
+            const response = await this.folderGroupStore.updateRow(properties, this.id);
+            this.showFolderGroupModal = false;
+        },
+        async deleteFolderGroup(properties) {
+            const response = await this.folderGroupStore.deleteRow(properties, this.id);
+            this.showFolderGroupModal = false;
         },
     },
     async mounted() {
