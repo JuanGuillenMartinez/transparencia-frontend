@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"
+            <a @click="$router.push({ path: '/' })" class="navbar-brand" href="#"
                 ><img src="@/assets/logo.png" width="40" alt="" />Dashboard</a
             >
             <button
