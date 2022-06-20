@@ -56,21 +56,38 @@
     >
         <folder-form :readonly="false" @save-clicked="saveDocument" />
     </custom-modal>
-    <custom-modal
+    <!-- <custom-modal
         title="Información del documento"
         title-close="Cerrar"
         @close-form="showModal = false"
         :visible="showModal"
     >
         <document-information :properties="information" />
-    </custom-modal>
+    </custom-modal> -->
     <modal-custom
         :visible="showFolderGroupModal"
         @close-modal="showFolderGroupModal = false"
     >
-        <template v-slot:title> Actualizar información del préstamo </template>
+        <template v-slot:title> Actualizar información del legajo </template>
         <template v-slot:body>
-            <form-folder-group @delete-clicked="deleteFolderGroup" @update-clicked="updateFolderGroup" :object="folderGroupSelected" />
+            <form-folder-group
+                @delete-clicked="deleteFolderGroup"
+                @update-clicked="updateFolderGroup"
+                :object="folderGroupSelected"
+            />
+        </template>
+    </modal-custom>
+    <modal-custom
+        :visible="showFolderForm"
+        @close-modal="showFolderForm = false"
+    >
+        <template v-slot:title> Actualizar información del documento </template>
+        <template v-slot:body>
+            <folder-information
+                @delete-clicked="deleteFolder"
+                @update-clicked="updateFolder"
+                :object="information"
+            />
         </template>
     </modal-custom>
 </template>
@@ -109,6 +126,9 @@ export default {
         FormFolderGroup: defineAsyncComponent(() =>
             import("@/components/folderGroup/FormFolderGroup.vue")
         ),
+        FolderInformation: defineAsyncComponent(() =>
+            import("@/components/folder/FolderInformation.vue")
+        ),
         CButton,
     },
     data() {
@@ -122,6 +142,8 @@ export default {
             folderIsSelected: false,
             folderGroupSelected: {},
             showFolderGroupModal: false,
+            showFolderForm: false,
+            folderSelected: false,
         };
     },
     props: {
@@ -154,10 +176,11 @@ export default {
             await this.folderStore.searchByFolder(row.id);
         },
         showModalInformation(selected) {
+            this.folderSelected = selected; 
             selected.folder_information.legajo = selected.legajo;
             selected.folder_information.subserie = selected.subserie;
             this.information = selected.folder_information;
-            this.showModal = true;
+            this.showFolderForm = true;
         },
         async saveFormGroup(object) {
             this.showGroupForm = false;
@@ -182,12 +205,31 @@ export default {
             }
         },
         async updateFolderGroup(properties) {
-            const response = await this.folderGroupStore.updateRow(properties, this.id);
+            const response = await this.folderGroupStore.updateRow(
+                properties,
+                this.id
+            );
             this.showFolderGroupModal = false;
         },
         async deleteFolderGroup(properties) {
-            const response = await this.folderGroupStore.deleteRow(properties, this.id);
+            const response = await this.folderGroupStore.deleteRow(
+                properties,
+                this.id
+            );
             this.showFolderGroupModal = false;
+        },
+        async updateFolder(properties) {
+            properties.folder_group_id = this.folderGroupSelected.id;
+            properties.id = this.folderSelected.id;
+            const response = await this.folderStore.updateRow(properties, this.id);
+            this.showFolderForm = false;
+            location.reload();
+        },
+        async deleteFolder(properties) {
+            properties.id = this.folderSelected.id;
+            const response = await this.folderStore.deleteRow(properties.id, this.id);
+            this.showFolderForm = false;
+            location.reload();
         },
     },
     async mounted() {

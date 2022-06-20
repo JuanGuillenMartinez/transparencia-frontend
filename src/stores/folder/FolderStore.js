@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
-import { getAll, get, post } from "@/helpers/Request";
+import { getAll, get, post, deleteRequest, put } from "@/helpers/Request";
 import headers from "@/helpers/TableHeaders/Folder"
+import { useFolderGroupStore } from "../folderGroup/FolderGroupStore";
+import { useSubdepartmentStore } from "../subdepartment/SubdepartmentStore";
 const baseUrl = "/folders";
 export const useFolderStore = defineStore("folder", {
     state: () => {
@@ -41,6 +43,22 @@ export const useFolderStore = defineStore("folder", {
             this.isLoading = true;
             const response = await get(`/folder-groups/${id}/folders`);
             this.listFinded = response.data;
+            this.isLoading = false;
+            return response;
+        },
+        async deleteRow(id, subdepartmentId) {
+            const subdepartmentStore = useSubdepartmentStore();
+            this.isLoading = true;
+            const response = await deleteRequest(`${baseUrl}/${id}`);
+            await subdepartmentStore.folderGroups(subdepartmentId);
+            this.isLoading = false;
+            return response;
+        },
+        async updateRow(properties, subdepartmentId) {
+            const subdepartmentStore = useSubdepartmentStore();
+            this.isLoading = true;
+            const response = await put(`${baseUrl}/${properties.id}`, properties);
+            await subdepartmentStore.folderGroups(subdepartmentId);
             this.isLoading = false;
             return response;
         }
