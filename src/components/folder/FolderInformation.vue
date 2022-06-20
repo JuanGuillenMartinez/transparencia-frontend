@@ -189,6 +189,7 @@ export default {
     emits: ["save-clicked", "update-clicked", "delete-clicked"],
     computed: {
         properties() {
+            this.object.clasificacion_informacion = "confidencial";
             return clone(this.object);
         },
     },

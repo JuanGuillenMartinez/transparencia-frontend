@@ -29,6 +29,14 @@ export const useFolderGroupStore = defineStore("folderGroup", {
             this.isLoading = false;
             return response;
         },
+        async add(object, subdepartmentId) {
+            const subdepartmentStore = useSubdepartmentStore();            
+            this.isLoading = true;
+            const response = await post(baseUrl, object);
+            await subdepartmentStore.folderGroups(subdepartmentId);
+            this.isLoading = false;
+            return response;
+        },
         async availables() {
             this.isLoading = true;
             const response = await get(`/available/folder-groups`);

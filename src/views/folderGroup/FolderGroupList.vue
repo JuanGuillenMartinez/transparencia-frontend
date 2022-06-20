@@ -185,7 +185,7 @@ export default {
         async saveFormGroup(object) {
             this.showGroupForm = false;
             object.subdepartment_id = this.id;
-            const response = await this.folderGroupStore.add(object);
+            const response = await this.folderGroupStore.add(object, this.id);
         },
         async saveDocument(object) {
             object.folder_group_id = this.folderIdSelected;

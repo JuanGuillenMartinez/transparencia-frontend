@@ -11,14 +11,20 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Estatus</label>
-            <input
-                :readonly="readonly"
+            <v-select
+                placeholder="disponible"
+                :disabled="readonly"
                 v-model="properties.estatus"
-                type="text"
-                class="form-control"
+                :options="['prestado', 'disponible']"
             />
         </div>
-        <button @click="$emit('save-clicked', properties)" type="button" class="btn btn-primary">Guardar</button>
+        <button
+            @click="$emit('save-clicked', properties)"
+            type="button"
+            class="btn btn-primary"
+        >
+            Guardar
+        </button>
     </form>
 </template>
 
@@ -32,9 +38,10 @@ export default {
         },
         readonly: Boolean,
     },
-    emits: ['save-clicked'],
+    emits: ["save-clicked"],
     computed: {
         properties() {
+            this.object.estatus = "disponible";
             return clone(this.object);
         },
     },

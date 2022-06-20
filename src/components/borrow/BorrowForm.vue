@@ -57,6 +57,7 @@ export default {
     computed: {
         ...mapStores(usePersonStore, useFolderGroupStore),
         properties() {
+            this.object.estatus = "disponible";
             return clone(this.object);
         },
     },
