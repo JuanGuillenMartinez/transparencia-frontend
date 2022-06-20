@@ -12,7 +12,7 @@
     <div class="card" v-else>
         <div class="card-body">
             <title-tab>Departamentos</title-tab>
-            <office-form class="form-add-office" @save-clicked="add" :readonly="false" />
+            <office-form class="form-add-office" @update-clicked="add" :readonly="false" />
         </div>
     </div>
     <div class="button-group">
