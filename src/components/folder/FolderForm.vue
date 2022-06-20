@@ -41,7 +41,7 @@
             <input
                 :readonly="readonly"
                 v-model="properties.fecha_inicio"
-                type="text"
+                type="date"
                 class="form-control"
             />
         </div>
@@ -50,7 +50,7 @@
             <input
                 :readonly="readonly"
                 v-model="properties.fecha_terminacion"
-                type="text"
+                type="date"
                 class="form-control"
             />
         </div>
