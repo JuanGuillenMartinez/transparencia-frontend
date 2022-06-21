@@ -11,19 +11,8 @@
 
 <body class=".contenido-body">
     <header>
-        <img class="logo" src="img/logo4.jpg" alt="">
-        <h1 class="titulo">Coordinación de Transparencia y Acceso a la Información</h1>
+        <h1 class="titulo">Coordinación de Transparencia y Acceso a la Información Pública</h1>
     </header>
-
-    <div class="nav-bg">
-        <nav class="navegacion-principal contenedor">
-            <a href="#">Inicio</a>
-            <a href="sobremi.html">Agregar Archivos</a>
-            <a href="#">Eliminar Archivo</a>
-            <a href="#">Editar Archivo</a>
-        </nav>
-    </div>
-
 
     <section class="hero">
         <div class="contenido-hero">
@@ -38,7 +27,6 @@
                 </svg> Villahermosa, Tabasco
             </p>
 
-            <a class="boton" href="#">Contactar</a>
             <div>
                 <a href="https://www.villahermosa.gob.mx/">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-bank" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -59,10 +47,45 @@
 
     </section>
 
+<main class="contenedor sombra">
+        <h2 style=" text-align: center">Transparencia</h2>
+        <div class="servicios">
+
+            <section class="servicio">
+                <h3>Definición de acceso a la Información</h3>
+                <div class="iconos">
+                   <i style="font-size: 5rem" class="fa-solid fa-box-archive"></i>
+                </div>
+                <p>El acceso a la información consiste en el derecho reconocido jurídicamente —a menudo a través de leyes sobre libertad de información— de consultar datos e información clave en poder del gobierno o de cualquier organismo público. 
+                Si bien los presupuestos, la aprobación de proyectos y las evaluaciones normalmente se publican, los ciudadanos pueden solicitar que se proporcionen documentos adicionales.</p>
+            </section>
+
+            <section class="servicio">
+                <h3>Definición de Transparencia</h3>
+                <div class="iconos">
+                   <i style="font-size: 5rem" class="fa-solid fa-folder-open"></i>
+                </div>
+                <p>El acceso a la información consiste en el derecho reconocido jurídicamente —a menudo a través de leyes sobre libertad de información— de consultar datos e información clave en poder del gobierno o de cualquier organismo público. Si bien los presupuestos, 
+                la aprobación de proyectos y las evaluaciones normalmente se publican, los ciudadanos pueden solicitar que se proporcionen documentos adicionales.</p>
+            </section>
+
+            <section class="servicio">
+                <h3>Se encarga</h3>
+                <div class="iconos">
+                <i style="font-size: 5rem" class="fa-solid fa-circle-info"></i>
+                </div>
+                <p>La transparencia es la cualidad de un gobierno, empresa, organización o persona de ser abierta en la divulgación de información, normas, planes, procesos y acciones.
+
+Como regla general, los funcionarios públicos, empleados públicos, gerentes y directores de empresas y organizaciones, y las juntas directivas tienen la obligación de actuar de manera visible, predecible y comprensible en la promoción de la participación y la rendición de cuentas.</p>
+            </section>
+
+        </div>
 
         <footer class="footer">
             <p>Todos los derechos reservador.</p>
         </footer>
+
+    </main>
 
 
 
@@ -88,7 +111,7 @@ export default {};
     box-sizing: border-box;
 }
 .contenido-body{
-    font-size: 16px; /*1rem = 10px*/
+    font-size: 16px;
     font-family: 'Krub', sans-serif;
     background-image: linear-gradient(to top, #DFE9F3 0%, var(--blanco) 100%);
 }
@@ -108,7 +131,7 @@ export default {};
 
 .contenedor{
     max-width: 120rem;
-    margin-top: 8rem;
+    margin: 0 auto;
 }
 
 .sombra{
@@ -159,7 +182,7 @@ cursor: pointer;
     display: flex;
 }
 
-.alinearr-derecha{
+.alinear-derecha{
     justify-content: flex-end;
 }
 
@@ -195,6 +218,7 @@ cursor: pointer;
 }
 
 .hero{ 
+    background-image: url(https://th.bing.com/th/id/OIP.XH9VdUuumk-9vYkI54TT0QHaEo?pid=ImgDet&w=1080&h=675&rs=1);
     background-repeat: no-repeat;
     background-size: cover;
     height: 410px;
@@ -215,7 +239,7 @@ cursor: pointer;
 }
 
 .contenido-hero h2, .contenido-hero p{
-    color: var(--blanco);
+    color: #ffffff;
 }
 
 @media (min-width: 768px){
