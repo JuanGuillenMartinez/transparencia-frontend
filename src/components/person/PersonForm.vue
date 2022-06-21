@@ -32,7 +32,7 @@
             <input
                 :readonly="readonly"
                 v-model="properties.id_interno"
-                type="text"
+                type="number"
                 class="form-control"
             />
         </div>
